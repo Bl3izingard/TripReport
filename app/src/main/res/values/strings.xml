@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">TripReport2</string>
+    <string name="app_name">Trip Report</string>
+    <string name="title_activity_home">HomeActivity</string>
 </resources>
