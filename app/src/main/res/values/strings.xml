@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">Trip Report</string>
-    <string name="title_activity_home">HomeActivity</string>
+    <string name="title_activity_home">Mouvements</string>
 </resources>
