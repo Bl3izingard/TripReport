@@ -1,4 +1,15 @@
 <resources>
     <string name="app_name">Trip Report</string>
     <string name="title_activity_home">Mouvements</string>
+    <string name="numero_vol">Numéro Vol</string>
+    <string name="distance">Distance (en Km)</string>
+    <string name="nb_passager">Nombre de passagers</string>
+    <string name="est_intracom">Est Intracom ?</string>
+    <string name="date_heure_depart"><![CDATA[Date & Heure départ]]></string>
+    <string name="date_heure_arrivee"><![CDATA[Date & Heure arrivée]]></string>
+    <string name="duree_vol">Durée vol</string>
+    <string name="button_enregistrer">Enregistrer</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
