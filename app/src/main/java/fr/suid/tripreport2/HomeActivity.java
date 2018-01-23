@@ -7,9 +7,18 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Adapter;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
+import java.util.List;
+
+import aeroplan.Mouvement;
 
 public class HomeActivity extends AppCompatActivity
 {
+
+	private ListView mouvementListView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -31,6 +40,11 @@ public class HomeActivity extends AppCompatActivity
 				startActivityForResult(i, 1);
 			}
 		});
+
+		mouvementListView = findViewById(R.id.listViewMouvement);
+
+		//Récupération de la liste des mouvements depuis le SERVEUR PRINCIPAL
+
 	}
 
 }

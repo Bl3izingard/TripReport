@@ -10,6 +10,10 @@
     <string name="duree_vol">Durée vol</string>
     <string name="button_enregistrer">Enregistrer</string>
 
+    <!-- TOAST MESSAGES -->
+    <string name="toast_champs">Le champ</string>
+    <string name="toast_not_empty"><![CDATA[est obligatoire]]></string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
