@@ -64,6 +64,9 @@ public class MouvementDAO extends DAOSqlLite<Mouvement>
 				Avion avion = new AvionDAO(super.context.getApplicationContext()).get(cursor.getColumnIndex("avionId"));
 				Aeroport aeroportDepart = new AeroportDAO(super.context.getApplicationContext()).get(cursor.getInt(cursor.getColumnIndex("AeroportDepart_oaci")));
 				Aeroport aeroportArrivee = new AeroportDAO(super.context.getApplicationContext()).get(cursor.getInt(cursor.getColumnIndex("AeroportArrivee_oaci")));
+
+				Log.d("DateHeureDepartData", cursor.getString(cursor.getColumnIndex("dateHeureDepart")));
+
 				dateHeureDepart.setTime(dateFormatter.parse(cursor.getString(cursor.getColumnIndex("dateHeureDepart"))));
 				dateHeureArrivee.setTime(dateFormatter.parse(cursor.getString(cursor.getColumnIndex("dateHeureArrivee"))));
 
