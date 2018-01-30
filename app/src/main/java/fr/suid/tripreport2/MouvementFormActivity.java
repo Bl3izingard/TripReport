@@ -23,7 +23,6 @@ import java.util.GregorianCalendar;
 import java.util.Locale;
 
 import aeroplan.Mouvement;
-import aeroplan.MouvementDAO;
 
 public class MouvementFormActivity extends AppCompatActivity
 {
@@ -254,16 +253,6 @@ public class MouvementFormActivity extends AppCompatActivity
 
 					//Enregistrement du mouvement
 					Mouvement mouvement = new Mouvement(0, NVol, cDepart, cArrivee, dureeVol, null, null, null);
-
-					MouvementDAO mDAO = new MouvementDAO();
-
-					try
-					{
-						mDAO.add(mouvement);
-					} catch (Exception e)
-					{
-						e.printStackTrace();
-					}
 
 				}
 

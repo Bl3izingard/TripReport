@@ -1,18 +1,23 @@
 package fr.suid.tripreport2;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import DAO.DAOSqlLite;
+import DAO.MouvementDAO;
 import aeroplan.Mouvement;
 
 public class HomeActivity extends AppCompatActivity
@@ -44,6 +49,14 @@ public class HomeActivity extends AppCompatActivity
 		mouvementListView = findViewById(R.id.listViewMouvement);
 
 		//Récupération de la liste des mouvements depuis le SERVEUR PRINCIPAL
+		try
+		{
+			ArrayList<Mouvement> mListe = new MouvementDAO(this.getApplicationContext()).getAll();
+		}
+		catch (Exception e)
+		{
+			Log.d("HERROR", e.toString());
+		}
 
 	}
 
