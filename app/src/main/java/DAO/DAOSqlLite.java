@@ -22,9 +22,9 @@ import static android.content.ContentValues.TAG;
 
 public abstract class DAOSqlLite<T> extends SQLiteOpenHelper
 {
-	private static final String DB_NAME = "aeroplan";
+	private static final String DB_NAME = "tripreport";
 
-	private static final int DB_VERSION = 3;
+	private static final int DB_VERSION = 4;
 
 	protected DAOSqlLite<T> sInstance;
 
@@ -57,7 +57,11 @@ public abstract class DAOSqlLite<T> extends SQLiteOpenHelper
 
 			rd.close();
 
-			database.execSQL(sb.toString());
+			for (String query: sb.toString().split(";"))
+			{
+				database.execSQL(query);
+			}
+
 		} catch (IOException e)
 		{
 			Log.e(TAG, "Error loading init SQL from raw", e);
@@ -91,12 +95,16 @@ public abstract class DAOSqlLite<T> extends SQLiteOpenHelper
 
 				rd.close();
 
-				db.execSQL(sb.toString());
+				for (String query: sb.toString().split(";"))
+				{
+					db.execSQL(query);
+				}
+
 
 				onCreate(db);
 			} catch (IOException e)
 			{
-				Log.e(TAG, "Error loading init SQL from raw", e);
+				Log.e(TAG, "Error executing IO", e);
 			} catch (SQLException e)
 			{
 				Log.e(TAG, "Error executing init SQL", e);

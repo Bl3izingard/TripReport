@@ -98,7 +98,7 @@ public class MouvementDAO extends DAOSqlLite<Mouvement>
 	public ArrayList<Mouvement> getAll(String clause, String value) throws Exception
 	{
 		ArrayList<Mouvement> mListe = null;
-		SimpleDateFormat dateFormatter = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy");
+		SimpleDateFormat dateFormatter = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss\"");
 		Calendar dateHeureDepart = Calendar.getInstance();
 		Calendar dateHeureArrivee = Calendar.getInstance();
 		SQLiteDatabase db = getReadableDatabase();

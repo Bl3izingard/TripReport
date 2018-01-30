@@ -52,12 +52,13 @@ public class HomeActivity extends AppCompatActivity
 		try
 		{
 			ArrayList<Mouvement> mListe = new MouvementDAO(this.getApplicationContext()).getAll();
+			Log.d("HomeActivity", "OK");
 		}
 		catch (Exception e)
 		{
 			Log.d("HERROR", e.toString());
 		}
-
+;
 	}
 
 }
