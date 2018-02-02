@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +24,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
+import DAO.MouvementDAO;
 import aeroplan.Mouvement;
 
 public class MouvementFormActivity extends AppCompatActivity
@@ -42,6 +45,10 @@ public class MouvementFormActivity extends AppCompatActivity
 	private EditText editTextNbPassagers;
 	private EditText editTextDureeVol;
 
+	//Widget
+	private Spinner spinnerAvion;
+	private Switch switchEstIntracom;
+
 	//Buton de Sauvegarde
 	private Button saveButton;
 
@@ -60,6 +67,8 @@ public class MouvementFormActivity extends AppCompatActivity
 		editTextDureeVol = findViewById(R.id.editTextDureeVol);
 		editTextNbPassagers = findViewById(R.id.editTextNbPassager);
 		editTextNVol = findViewById(R.id.editTextNumeroVol);
+		spinnerAvion = findViewById(R.id.spinnerAvion);
+		switchEstIntracom = findViewById(R.id.switchIntracom);
 
 		saveButton = findViewById(R.id.button);
 
@@ -245,6 +254,10 @@ public class MouvementFormActivity extends AppCompatActivity
 					//Préparation des données
 					String NVol = editTextNVol.getText().toString();
 					int dureeVol = Integer.parseInt(editTextDureeVol.getText().toString());
+					int distance = Integer.parseInt(editTextDistance.getText().toString());
+
+					int nbPassager = Integer.parseInt(editTextNbPassagers.getText().toString());
+					boolean estIntracom = false;
 					Calendar cDepart = Calendar.getInstance();
 					Calendar cArrivee = Calendar.getInstance();
 
@@ -252,7 +265,8 @@ public class MouvementFormActivity extends AppCompatActivity
 					cArrivee.set(dateTimeFragmentHA.getYear(), dateTimeFragmentHA.getMonth(), dateTimeFragmentHA.getDay(), dateTimeFragmentHA.getHourOfDay(), dateTimeFragmentHA.getMinute());
 
 					//Enregistrement du mouvement
-					Mouvement mouvement = new Mouvement(0, NVol, cDepart, cArrivee, dureeVol, null, null, null);
+					Mouvement mouvement = new Mouvement(0, NVol, distance, cDepart, cArrivee, dureeVol, estIntracom, nbPassager, null, null, null);
+
 
 				}
 

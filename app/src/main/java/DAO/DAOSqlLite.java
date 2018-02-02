@@ -24,7 +24,7 @@ public abstract class DAOSqlLite<T> extends SQLiteOpenHelper
 {
 	private static final String DB_NAME = "tripreport";
 
-	private static final int DB_VERSION = 4;
+	private static final int DB_VERSION = 9;
 
 	protected DAOSqlLite<T> sInstance;
 
@@ -115,10 +115,10 @@ public abstract class DAOSqlLite<T> extends SQLiteOpenHelper
 		}
 	}
 
-
 	public abstract boolean add(T o) throws Exception;
 	public abstract boolean update(T o) throws Exception;
 	public abstract boolean delete(T o) throws Exception;
+	public abstract boolean erase() throws Exception;
 	public abstract ArrayList<T> getAll() throws Exception;
 	public abstract ArrayList<T> getAll(String clause, String value) throws Exception;
 	public abstract T get(int id) throws Exception;

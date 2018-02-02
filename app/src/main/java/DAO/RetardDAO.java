@@ -43,6 +43,16 @@ public class RetardDAO extends DAOSqlLite<Retard>
 	}
 
 	@Override
+	public boolean erase() throws Exception
+	{
+		SQLiteDatabase db = getWritableDatabase();
+
+		//db.execSQL("DELETE FROM TypeRetard");
+
+		return db.delete("Retard", null, null) > 0;
+	}
+
+	@Override
 	public ArrayList<Retard> getAll() throws Exception
 	{
 		ArrayList<Retard> liste = new ArrayList<Retard>();
@@ -57,7 +67,7 @@ public class RetardDAO extends DAOSqlLite<Retard>
 			{
 				do
 				{
-					TypeRetard typeRetard = new TypeRetardDAO(super.context.getApplicationContext()).get(cursor.getInt(cursor.getColumnIndex("id")));
+					TypeRetard typeRetard = new TypeRetardDAO(super.context.getApplicationContext()).get(cursor.getInt(cursor.getColumnIndex("TypeRetard_id")));
 
 					liste.add(new Retard(
 							cursor.getInt(cursor.getColumnIndex("id")),
@@ -96,7 +106,7 @@ public class RetardDAO extends DAOSqlLite<Retard>
 			{
 				do
 				{
-					TypeRetard typeRetard = new TypeRetardDAO(super.context.getApplicationContext()).get(cursor.getInt(cursor.getColumnIndex("id")));
+					TypeRetard typeRetard = new TypeRetardDAO(super.context.getApplicationContext()).get(cursor.getInt(cursor.getColumnIndex("TypeRetard_id")));
 
 					liste.add(new Retard(
 							cursor.getInt(cursor.getColumnIndex("id")),
@@ -133,7 +143,7 @@ public class RetardDAO extends DAOSqlLite<Retard>
 		{
 			if(cursor.moveToFirst())
 			{
-				TypeRetard typeRetard = new TypeRetardDAO(super.context.getApplicationContext()).get(cursor.getInt(cursor.getColumnIndex("id")));
+				TypeRetard typeRetard = new TypeRetardDAO(super.context.getApplicationContext()).get(cursor.getInt(cursor.getColumnIndex("TypeRetard_id")));
 
 				retard = new Retard(
 						cursor.getInt(cursor.getColumnIndex("id")),

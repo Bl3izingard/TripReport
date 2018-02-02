@@ -40,7 +40,15 @@ public class AvionDAO extends DAO.DAOSqlLite<Avion>
 		return false;
 	}
 
+	@Override
+	public boolean erase() throws Exception
+	{
+		SQLiteDatabase db = getWritableDatabase();
 
+		//db.execSQL("DELETE FROM TypeRetard");
+
+		return db.delete("Avion", null, null) > 0;
+	}
 
 	@Override
 	public ArrayList<Avion> getAll() throws Exception
@@ -49,7 +57,7 @@ public class AvionDAO extends DAO.DAOSqlLite<Avion>
 
 		SQLiteDatabase db = getReadableDatabase();
 
-		Cursor cursor = db.rawQuery("SELECT * FROM Aeroport;", null);
+		Cursor cursor = db.rawQuery("SELECT * FROM Avion;", null);
 
 		try
 		{
@@ -85,7 +93,7 @@ public class AvionDAO extends DAO.DAOSqlLite<Avion>
 
 		SQLiteDatabase db = getReadableDatabase();
 
-		Cursor cursor = db.rawQuery(String.format("SELECT * FROM Aeroport WHERE =%s='%s';", clause, value), null);
+		Cursor cursor = db.rawQuery(String.format("SELECT * FROM Avion WHERE %s='%s';", clause, value), null);
 
 		try
 		{
@@ -120,7 +128,7 @@ public class AvionDAO extends DAO.DAOSqlLite<Avion>
 		Avion avion = null;
 		SQLiteDatabase db = getReadableDatabase();
 
-		Cursor cursor = db.rawQuery(String.format("SELECT * FROM Aeroport WHERE id='%s';", id), null);
+		Cursor cursor = db.rawQuery(String.format("SELECT * FROM Avion WHERE id='%s';", id), null);
 
 		try
 		{
