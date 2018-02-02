@@ -24,7 +24,11 @@ public class TypeRetardDAO extends DAOSqlLite<TypeRetard>
 	@Override
 	public boolean add(TypeRetard o) throws Exception
 	{
-		return false;
+		SQLiteDatabase db = getWritableDatabase();
+
+		db.execSQL(String.format("REPLACE INTO TypeRetard (id, codeSituation, nom) VALUES (%s, '%s', '%s')", o.getId(), o.getCodeSituation(), o.getLibelle()));
+
+		return true;
 	}
 
 	@Override
@@ -37,6 +41,16 @@ public class TypeRetardDAO extends DAOSqlLite<TypeRetard>
 	public boolean delete(TypeRetard o) throws Exception
 	{
 		return false;
+	}
+
+	@Override
+	public boolean erase() throws Exception
+	{
+		SQLiteDatabase db = getWritableDatabase();
+
+		//db.execSQL("DELETE FROM TypeRetard");
+
+		return db.delete("TypeRetard", null, null) > 0;
 	}
 
 	@Override

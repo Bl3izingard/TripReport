@@ -4,11 +4,13 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Locale;
 
 import aeroplan.Aeroport;
 import aeroplan.Avion;
@@ -30,7 +32,25 @@ public class MouvementDAO extends DAOSqlLite<Mouvement>
 	@Override
 	public boolean add(Mouvement o) throws Exception
 	{
-		return false;
+		SimpleDateFormat dateFormatter = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
+
+
+		SQLiteDatabase db = getWritableDatabase();
+
+		db.execSQL(String.format("INSERT INTO Mouvement VALUES (%s, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s' )",
+				o.getId(),
+				o.getNumeroVol(),
+				o.getDureeVol(),
+				o.getDistance(),
+				o.getNbPassagers(),
+				dateFormatter.format(o.getDateHeureDepart().getTime()),
+				dateFormatter.format(o.getDateHeureArrivee().getTime()),
+				o.getDureeVol(),
+				o.getAeroportDepart().getId(),
+				o.getAeroportArrivee().getId(),
+				o.getAvionUtilise().getId()));
+
+		return true;
 	}
 
 	@Override
@@ -45,11 +65,22 @@ public class MouvementDAO extends DAOSqlLite<Mouvement>
 		return false;
 	}
 
+
+	@Override
+	public boolean erase() throws Exception
+	{
+		SQLiteDatabase db = getWritableDatabase();
+
+		//db.execSQL("DELETE FROM TypeRetard");
+
+		return db.delete("Mouvement", null, null) > 0;
+	}
+
 	@Override
 	public ArrayList<Mouvement> getAll() throws Exception
 	{
-		ArrayList<Mouvement> mListe = null;
-		SimpleDateFormat dateFormatter = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy");
+		ArrayList<Mouvement> mListe = new ArrayList<Mouvement>();
+		SimpleDateFormat dateFormatter = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
 		Calendar dateHeureDepart = Calendar.getInstance();
 		Calendar dateHeureArrivee = Calendar.getInstance();
 		SQLiteDatabase db = getReadableDatabase();
@@ -60,35 +91,36 @@ public class MouvementDAO extends DAOSqlLite<Mouvement>
 		{
 			if (cursor.moveToFirst())
 			{
-				ArrayList<Retard> rListe = new RetardDAO(super.context.getApplicationContext()).getAll();
-				Avion avion = new AvionDAO(super.context.getApplicationContext()).get(cursor.getColumnIndex("avionId"));
-				Aeroport aeroportDepart = new AeroportDAO(super.context.getApplicationContext()).get(cursor.getInt(cursor.getColumnIndex("AeroportDepart_oaci")));
-				Aeroport aeroportArrivee = new AeroportDAO(super.context.getApplicationContext()).get(cursor.getInt(cursor.getColumnIndex("AeroportArrivee_oaci")));
+				do
+				{
+					ArrayList<Retard> rListe = new RetardDAO(super.context.getApplicationContext()).getAll("Mouvement_id", cursor.getString(cursor.getColumnIndex("id")));
+					Avion avion = new AvionDAO(super.context.getApplicationContext()).get(cursor.getInt(cursor.getColumnIndex("Avion_id")));
+					Aeroport aeroportDepart = new AeroportDAO(super.context.getApplicationContext()).get(cursor.getString(cursor.getColumnIndex("AeroportDepart_oaci")));
+					Aeroport aeroportArrivee = new AeroportDAO(super.context.getApplicationContext()).get(cursor.getString(cursor.getColumnIndex("AeroportArrivee_oaci")));
 
-				Log.d("DateHeureDepartData", cursor.getString(cursor.getColumnIndex("dateHeureDepart")));
-
-				dateHeureDepart.setTime(dateFormatter.parse(cursor.getString(cursor.getColumnIndex("dateHeureDepart"))));
-				dateHeureArrivee.setTime(dateFormatter.parse(cursor.getString(cursor.getColumnIndex("dateHeureArrivee"))));
+					dateHeureDepart.setTime(dateFormatter.parse(cursor.getString(cursor.getColumnIndex("dateHeureDepart"))));
+					dateHeureArrivee.setTime(dateFormatter.parse(cursor.getString(cursor.getColumnIndex("dateHeureArrivee"))));
 
 
-				Mouvement mouvement = new Mouvement(
-						cursor.getInt(cursor.getColumnIndex("id")),
-						cursor.getString(cursor.getColumnIndex("numeroVol")),
-						dateHeureDepart,
-						dateHeureArrivee,
-						cursor.getInt(cursor.getInt(cursor.getColumnIndex("dureeVol"))),
-						avion,
-						aeroportDepart,
-						aeroportArrivee
-				);
+					Mouvement mouvement = new Mouvement(
+							cursor.getInt(cursor.getColumnIndex("id")),
+							cursor.getString(cursor.getColumnIndex("numeroVol")),
+							dateHeureDepart,
+							dateHeureArrivee,
+							cursor.getInt(cursor.getInt(cursor.getColumnIndex("dureeVol"))),
+							avion,
+							aeroportDepart,
+							aeroportArrivee
+					);
 
-				feedRetard(mouvement, rListe);
+					//mouvement = feedRetard(mouvement, rListe);
 
-				mListe.add(mouvement);
+					mListe.add(mouvement);
+				} while(cursor.moveToNext());
 			}
 		} catch (SQLException e)
 		{
-			Log.d("MVDAO", "Error while getting data from BDD");
+			Log.e("MVDAO", "Error while getting data from BDD");
 		} finally
 		{
 			cursor.close();
@@ -100,8 +132,8 @@ public class MouvementDAO extends DAOSqlLite<Mouvement>
 	@Override
 	public ArrayList<Mouvement> getAll(String clause, String value) throws Exception
 	{
-		ArrayList<Mouvement> mListe = null;
-		SimpleDateFormat dateFormatter = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss\"");
+		ArrayList<Mouvement> mListe = new ArrayList<Mouvement>();
+		SimpleDateFormat dateFormatter = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
 		Calendar dateHeureDepart = Calendar.getInstance();
 		Calendar dateHeureArrivee = Calendar.getInstance();
 		SQLiteDatabase db = getReadableDatabase();
@@ -112,32 +144,36 @@ public class MouvementDAO extends DAOSqlLite<Mouvement>
 		{
 			if (cursor.moveToFirst())
 			{
-				ArrayList<Retard> rListe = new RetardDAO(super.context.getApplicationContext()).getAll();
-				Avion avion = new AvionDAO(super.context.getApplicationContext()).get(cursor.getColumnIndex("avionId"));
-				Aeroport aeroportDepart = new AeroportDAO(super.context.getApplicationContext()).get(cursor.getInt(cursor.getColumnIndex("AeroportDepart_oaci")));
-				Aeroport aeroportArrivee = new AeroportDAO(super.context.getApplicationContext()).get(cursor.getInt(cursor.getColumnIndex("AeroportArrivee_oaci")));
-				dateHeureDepart.setTime(dateFormatter.parse(cursor.getString(cursor.getColumnIndex("dateHeureDepart"))));
-				dateHeureArrivee.setTime(dateFormatter.parse(cursor.getString(cursor.getColumnIndex("dateHeureArrivee"))));
+				do
+				{
+					ArrayList<Retard> rListe = new RetardDAO(super.context.getApplicationContext()).getAll();
+					Avion avion = new AvionDAO(super.context.getApplicationContext()).get(cursor.getColumnIndex("Avion_id"));
+					Aeroport aeroportDepart = new AeroportDAO(super.context.getApplicationContext()).get(cursor.getInt(cursor.getColumnIndex("AeroportDepart_oaci")));
+					Aeroport aeroportArrivee = new AeroportDAO(super.context.getApplicationContext()).get(cursor.getInt(cursor.getColumnIndex("AeroportArrivee_oaci")));
+
+					dateHeureDepart.setTime(dateFormatter.parse(cursor.getString(cursor.getColumnIndex("dateHeureDepart"))));
+					dateHeureArrivee.setTime(dateFormatter.parse(cursor.getString(cursor.getColumnIndex("dateHeureArrivee"))));
 
 
-				Mouvement mouvement = new Mouvement(
-						cursor.getInt(cursor.getColumnIndex("id")),
-						cursor.getString(cursor.getColumnIndex("numeroVol")),
-						dateHeureDepart,
-						dateHeureArrivee,
-						cursor.getInt(cursor.getInt(cursor.getColumnIndex("dureeVol"))),
-						avion,
-						aeroportDepart,
-						aeroportArrivee
-				);
+					Mouvement mouvement = new Mouvement(
+							cursor.getInt(cursor.getColumnIndex("id")),
+							cursor.getString(cursor.getColumnIndex("numeroVol")),
+							dateHeureDepart,
+							dateHeureArrivee,
+							cursor.getInt(cursor.getInt(cursor.getColumnIndex("dureeVol"))),
+							avion,
+							aeroportDepart,
+							aeroportArrivee
+					);
 
-				feedRetard(mouvement, rListe);
+					mouvement = feedRetard(mouvement, rListe);
 
-				mListe.add(mouvement);
+					mListe.add(mouvement);
+				} while(cursor.moveToNext());
 			}
 		} catch (SQLException e)
 		{
-			Log.d("MVDAO", "Error while getting data from BDD");
+			Log.e("MVDAO", "Error while getting data from BDD");
 		} finally
 		{
 			cursor.close();
@@ -150,7 +186,7 @@ public class MouvementDAO extends DAOSqlLite<Mouvement>
 	public Mouvement get(int id) throws Exception
 	{
 		Mouvement mouvement = null;
-		SimpleDateFormat dateFormatter = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy");
+		SimpleDateFormat dateFormatter = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
 		Calendar dateHeureDepart = Calendar.getInstance();
 		Calendar dateHeureArrivee = Calendar.getInstance();
 		SQLiteDatabase db = getReadableDatabase();
@@ -162,7 +198,7 @@ public class MouvementDAO extends DAOSqlLite<Mouvement>
 			if (cursor.moveToFirst())
 			{
 				ArrayList<Retard> rListe = new RetardDAO(super.context.getApplicationContext()).getAll();
-				Avion avion = new AvionDAO(super.context.getApplicationContext()).get(cursor.getColumnIndex("avionId"));
+				Avion avion = new AvionDAO(super.context.getApplicationContext()).get(cursor.getColumnIndex("Avion_id"));
 				Aeroport aeroportDepart = new AeroportDAO(super.context.getApplicationContext()).get(cursor.getInt(cursor.getColumnIndex("AeroportDepart_oaci")));
 				Aeroport aeroportArrivee = new AeroportDAO(super.context.getApplicationContext()).get(cursor.getInt(cursor.getColumnIndex("AeroportArrivee_oaci")));
 				dateHeureDepart.setTime(dateFormatter.parse(cursor.getString(cursor.getColumnIndex("dateHeureDepart"))));
@@ -193,11 +229,12 @@ public class MouvementDAO extends DAOSqlLite<Mouvement>
 		return mouvement;
 	}
 
-	private void feedRetard(Mouvement m, ArrayList<Retard> rListe)
+	private Mouvement feedRetard(Mouvement m, ArrayList<Retard> rListe)
 	{
 		for (Retard r : rListe)
 		{
 			m.ajouteRetard(r);
 		}
+		return  m;
 	}
 }

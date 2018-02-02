@@ -41,6 +41,16 @@ public class AeroportDAO extends DAO.DAOSqlLite<Aeroport>
 	}
 
 	@Override
+	public boolean erase() throws Exception
+	{
+		SQLiteDatabase db = getWritableDatabase();
+
+		//db.execSQL("DELETE FROM TypeRetard");
+
+		return db.delete("Aeroport", null, null) > 0;
+	}
+
+	@Override
 	public ArrayList<Aeroport> getAll() throws Exception
 	{
 		ArrayList<Aeroport> liste = new ArrayList<Aeroport>();
@@ -121,6 +131,38 @@ public class AeroportDAO extends DAO.DAOSqlLite<Aeroport>
 		SQLiteDatabase db = getReadableDatabase();
 
 		Cursor cursor = db.rawQuery(String.format("SELECT * FROM Aeroport WHERE id='%s';", id), null);
+
+		try
+		{
+			if(cursor.moveToFirst())
+			{
+				aeroport = new Aeroport(
+						cursor.getString(cursor.getColumnIndex("oaci")),
+						cursor.getString(cursor.getColumnIndex("aita")),
+						cursor.getString(cursor.getColumnIndex("nom")),
+						cursor.getFloat(cursor.getColumnIndex("latitude")),
+						cursor.getFloat(cursor.getColumnIndex("longitude"))
+				);
+			}
+		}
+		catch (SQLException e)
+		{
+			Log.d("TRDAO","Error while getting data from BDD");
+		}
+		finally
+		{
+			cursor.close();
+		}
+
+		return aeroport;
+	}
+
+	public Aeroport get(String oaci) throws Exception
+	{
+		Aeroport aeroport = null;
+		SQLiteDatabase db = getReadableDatabase();
+
+		Cursor cursor = db.rawQuery(String.format("SELECT * FROM Aeroport WHERE oaci='%s';", oaci), null);
 
 		try
 		{

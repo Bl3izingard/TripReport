@@ -9,7 +9,8 @@
     <string name="date_heure_arrivee"><![CDATA[Date & Heure arrivée]]></string>
     <string name="duree_vol">Durée vol</string>
     <string name="button_enregistrer">Enregistrer</string>
-
+    <string name="erreur_internet">Vous n\'êtes pas connecté à internet</string>
+    <string name="erreur_maj_SQLite">Une erreur est survenue lors de la mise à jour des données</string>
     <!-- TOAST MESSAGES -->
     <string name="toast_champs">Le champ</string>
     <string name="toast_not_empty"><![CDATA[est obligatoire]]></string>

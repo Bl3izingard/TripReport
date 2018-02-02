@@ -52,11 +52,16 @@ public class HomeActivity extends AppCompatActivity
 		try
 		{
 			ArrayList<Mouvement> mListe = new MouvementDAO(this.getApplicationContext()).getAll();
-			Log.d("HomeActivity", "OK");
+			MouvementAdapter mouvementAdapter = new MouvementAdapter(this, R.layout.activity_mouvement_list, mListe);
+			mouvementListView.setAdapter(mouvementAdapter);
+
+
+
+
 		}
 		catch (Exception e)
 		{
-			Log.d("HERROR", e.toString());
+			Log.e("HERROR", e.toString());
 		}
 ;
 	}

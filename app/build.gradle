@@ -16,6 +16,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    packagingOptions {
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/DEPENDENCIES'
+    }
     sourceSets { main { res.srcDirs = ['src/main/res', 'src/main/res/menu'] } }
 }
 
@@ -27,6 +31,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    compile 'org.apache.httpcomponents:httpclient:4.5'
     compile 'com.github.Kunzisoft:Android-SwitchDateTimePicker:1.8'
     compile fileTree(dir: 'libs', include: ['aeroplan.jar', 'mysql-connector-java-bin.jar', 'commons-io-2.6'])
 }
