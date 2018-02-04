@@ -37,17 +37,16 @@ public class MouvementDAO extends DAOSqlLite<Mouvement>
 
 		SQLiteDatabase db = getWritableDatabase();
 
-		db.execSQL(String.format("INSERT INTO Mouvement VALUES (%s, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s' )",
-				o.getId(),
+		db.execSQL(String.format("INSERT INTO Mouvement (numeroVol, distance, nbPassagers, estIntracom, dateHeureDepart, dateHeureArrivee, dureeVol, AeroportDepart_oaci, AeroportArrivee_oaci, Avion_id) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s' )",
 				o.getNumeroVol(),
-				o.getDureeVol(),
 				o.getDistance(),
 				o.getNbPassagers(),
+				0,
 				dateFormatter.format(o.getDateHeureDepart().getTime()),
 				dateFormatter.format(o.getDateHeureArrivee().getTime()),
 				o.getDureeVol(),
-				o.getAeroportDepart().getId(),
-				o.getAeroportArrivee().getId(),
+				o.getAeroportDepart().getOaci(),
+				o.getAeroportArrivee().getOaci(),
 				o.getAvionUtilise().getId()));
 
 		return true;
@@ -107,7 +106,7 @@ public class MouvementDAO extends DAOSqlLite<Mouvement>
 							cursor.getString(cursor.getColumnIndex("numeroVol")),
 							dateHeureDepart,
 							dateHeureArrivee,
-							cursor.getInt(cursor.getInt(cursor.getColumnIndex("dureeVol"))),
+							cursor.getInt(cursor.getColumnIndex("dureeVol")),
 							avion,
 							aeroportDepart,
 							aeroportArrivee

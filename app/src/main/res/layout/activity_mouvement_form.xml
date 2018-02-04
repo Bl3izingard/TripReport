@@ -6,117 +6,139 @@
     android:layout_height="match_parent"
     tools:context="fr.suid.tripreport2.MouvementFormActivity">
 
-    <LinearLayout
-        android:layout_width="360dp"
-        android:layout_height="498dp"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="5dp">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/textViewNumeroVol"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/numero_vol" />
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/textViewNumeroVol"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/numero_vol" />
 
-        <EditText
-            android:id="@+id/editTextNumeroVol"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName" />
+            <EditText
+                android:id="@+id/editTextNumeroVol"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName" />
 
-        <TextView
-            android:id="@+id/textViewAvion"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="TextView" />
+            <TextView
+                android:id="@+id/textViewAvion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/avion" />
 
-        <Spinner
-            android:id="@+id/spinnerAvion"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            <Spinner
+                android:id="@+id/spinnerAvion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-        <TextView
-            android:id="@+id/textViewDistance"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/distance" />
+            <TextView
+                android:id="@+id/textViewDistance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/distance" />
 
-        <EditText
-            android:id="@+id/editTextDistance"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="numberDecimal" />
+            <EditText
+                android:id="@+id/editTextDistance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="numberDecimal" />
 
-        <TextView
-            android:id="@+id/textViewNbPassager"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/nb_passager" />
+            <TextView
+                android:id="@+id/textViewNbPassager"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/nb_passager" />
 
-        <EditText
-            android:id="@+id/editTextNbPassager"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="number" />
+            <EditText
+                android:id="@+id/editTextNbPassager"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="number" />
 
-        <Switch
-            android:id="@+id/switchIntracom"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/est_intracom" />
+            <Switch
+                android:id="@+id/switchIntracom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/est_intracom" />
 
-        <TextView
-            android:id="@+id/textViewDateHeureDepart"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/date_heure_depart" />
+            <TextView
+                android:id="@+id/textViewAeroportDepart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/aeroport_depart" />
 
-        <EditText
-            android:id="@+id/editTextDateHeureDepart"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:focusedByDefault="false"
-            android:inputType="datetime"
-            android:onClick="showTimePickerDialog" />
+            <Spinner
+                android:id="@+id/spinnerAeroportDepart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-        <TextView
-            android:id="@+id/textViewDateHeureArrivee"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/date_heure_arrivee" />
+            <TextView
+                android:id="@+id/textViewDateHeureDepart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/date_heure_depart" />
 
-        <EditText
-            android:id="@+id/editTextDateHeureArrivee"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="date"
-            android:onClick="showTimePickerDialog"/>
+            <EditText
+                android:id="@+id/editTextDateHeureDepart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:focusedByDefault="false"
+                android:inputType="datetime"
+                android:onClick="showTimePickerDialog" />
 
-        <TextView
-            android:id="@+id/textViewDureeVol"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/duree_vol" />
+            <TextView
+                android:id="@+id/textViewAeroportArrivee"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/aeroport_arrivee" />
 
-        <EditText
-            android:id="@+id/editTextDureeVol"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="numberDecimal" />
+            <Spinner
+                android:id="@+id/spinnerAeroportArrivee"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-        <Button
-            android:id="@+id/button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/button_enregistrer" />
+            <TextView
+                android:id="@+id/textViewDateHeureArrivee"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/date_heure_arrivee" />
 
-    </LinearLayout>
+            <EditText
+                android:id="@+id/editTextDateHeureArrivee"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="date"
+                android:onClick="showTimePickerDialog" />
+
+            <TextView
+                android:id="@+id/textViewDureeVol"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/duree_vol" />
+
+            <EditText
+                android:id="@+id/editTextDureeVol"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="numberDecimal" />
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/button_enregistrer" />
+        </LinearLayout>
+    </ScrollView>
 </android.support.constraint.ConstraintLayout>

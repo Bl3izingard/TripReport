@@ -5,12 +5,17 @@
     <string name="distance">Distance (en Km)</string>
     <string name="nb_passager">Nombre de passagers</string>
     <string name="est_intracom">Est Intracom ?</string>
+    <string name="avion">Avion utilisé</string>
+    <string name="aeroport_depart">Aéroport Départ</string>
+    <string name="aeroport_arrivee">Aéroport Arrivée</string>
     <string name="date_heure_depart"><![CDATA[Date & Heure départ]]></string>
     <string name="date_heure_arrivee"><![CDATA[Date & Heure arrivée]]></string>
     <string name="duree_vol">Durée vol</string>
     <string name="button_enregistrer">Enregistrer</string>
     <string name="erreur_internet">Vous n\'êtes pas connecté à internet</string>
     <string name="erreur_maj_SQLite">Une erreur est survenue lors de la mise à jour des données</string>
+    <string name="erreur_ajout_mouvement">Une erreur est survenue : veuillez recommencer.</string>
+    <string name="succes_ajout_mouvement">Le mouvement a été ajouté avec succès</string>
     <!-- TOAST MESSAGES -->
     <string name="toast_champs">Le champ</string>
     <string name="toast_not_empty"><![CDATA[est obligatoire]]></string>

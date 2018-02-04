@@ -25,7 +25,11 @@ public class AvionDAO extends DAO.DAOSqlLite<Avion>
 	@Override
 	public boolean add(Avion o) throws Exception
 	{
-		return false;
+		SQLiteDatabase db = getWritableDatabase();
+
+		db.execSQL(String.format("REPLACE INTO Avion (id, modele, numeroSerie, codeInterne) VALUES (%s, '%s', '%s', '%s')", o.getId(), o.getModele(),o.getNumeroSerie(), o.getCodeInterne()));
+
+		return true;
 	}
 
 	@Override

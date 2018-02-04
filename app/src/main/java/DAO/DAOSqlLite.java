@@ -24,7 +24,7 @@ public abstract class DAOSqlLite<T> extends SQLiteOpenHelper
 {
 	private static final String DB_NAME = "tripreport";
 
-	private static final int DB_VERSION = 9;
+	private static final int DB_VERSION = 10;
 
 	protected DAOSqlLite<T> sInstance;
 

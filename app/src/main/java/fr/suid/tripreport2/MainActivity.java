@@ -81,8 +81,9 @@ public class MainActivity extends AppCompatActivity
 				JSONArray jsonArrayArray = (JSONArray) data.get("TypeRetard");
 				JSONObject row = null;
 
-				for(int i=0; (row = jsonArrayArray.getJSONObject(i)) != null; i++)
+				for(int i=0; i < jsonArrayArray.length(); i++)
 				{
+					row = jsonArrayArray.getJSONObject(i);
 					TypeRetard typeRetard = new TypeRetard(row.getInt("id"), row.getString("codeSituation"), row.getString("nom"));
 
 					if(!new TypeRetardDAO(this).add(typeRetard))
@@ -96,8 +97,10 @@ public class MainActivity extends AppCompatActivity
 
 				jsonArrayArray = (JSONArray) data.get("Aeroport");
 
-				for(int i=0; (row = jsonArrayArray.getJSONObject(i)) != null; i++)
+				for(int i=0; i < jsonArrayArray.length(); i++)
 				{
+					row = jsonArrayArray.getJSONObject(i);
+
 					Aeroport aeroport = new Aeroport(row.getInt("id"), row.getString("oaci"), row.getString("aita"), row.getString("nom"), ((float) row.getLong("latitude")), ((float) row.getLong("longitude")));
 
 					if(!new AeroportDAO(this).add(aeroport))
@@ -110,8 +113,10 @@ public class MainActivity extends AppCompatActivity
 
 				jsonArrayArray = (JSONArray) data.get("Avion");
 
-				for(int i=0; (row = jsonArrayArray.getJSONObject(i)) != null; i++)
+				for(int i=0; i < jsonArrayArray.length(); i++)
 				{
+					row = jsonArrayArray.getJSONObject(i);
+
 					Avion avion = new Avion(row.getInt("id"), row.getString("modele"), row.getString("numeroSerie"), row.getString("codeInterne"));
 
 					if(!new AvionDAO(this).add(avion))

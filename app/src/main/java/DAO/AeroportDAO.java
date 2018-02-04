@@ -25,7 +25,11 @@ public class AeroportDAO extends DAO.DAOSqlLite<Aeroport>
 	@Override
 	public boolean add(Aeroport o) throws Exception
 	{
-		return false;
+		SQLiteDatabase db = getWritableDatabase();
+
+		db.execSQL(String.format("REPLACE INTO Aeroport (id, oaci, aita, nom, latitude, longitude) VALUES (%s, '%s', '%s', '%s', '%s', '%s')", o.getId(), o.getOaci(),o.getAita(), o.getNom(), o.getLatitude(), o.getLongitude()));
+
+		return true;
 	}
 
 	@Override

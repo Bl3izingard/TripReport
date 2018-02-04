@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -19,12 +20,18 @@ import android.widget.Toast;
 import com.kunzisoft.switchdatetime.SwitchDateTimeDialogFragment;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Locale;
 
+import DAO.AeroportDAO;
+import DAO.AvionDAO;
 import DAO.MouvementDAO;
+import aeroplan.Aeroport;
+import aeroplan.Avion;
 import aeroplan.Mouvement;
 
 public class MouvementFormActivity extends AppCompatActivity
@@ -47,6 +54,8 @@ public class MouvementFormActivity extends AppCompatActivity
 
 	//Widget
 	private Spinner spinnerAvion;
+	private Spinner spinnerAeroportDepart;
+	private Spinner spinnerAeroportArrivee;
 	private Switch switchEstIntracom;
 
 	//Buton de Sauvegarde
@@ -54,6 +63,9 @@ public class MouvementFormActivity extends AppCompatActivity
 
 	private SwitchDateTimeDialogFragment dateTimeFragmentHD;
 	private SwitchDateTimeDialogFragment dateTimeFragmentHA;
+
+	private ArrayList<Avion> avionArrayList;
+	private ArrayList<Aeroport> aeroportArrayList;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -68,9 +80,37 @@ public class MouvementFormActivity extends AppCompatActivity
 		editTextNbPassagers = findViewById(R.id.editTextNbPassager);
 		editTextNVol = findViewById(R.id.editTextNumeroVol);
 		spinnerAvion = findViewById(R.id.spinnerAvion);
+		spinnerAeroportDepart = findViewById(R.id.spinnerAeroportDepart);
+		spinnerAeroportArrivee = findViewById(R.id.spinnerAeroportArrivee);
 		switchEstIntracom = findViewById(R.id.switchIntracom);
 
 		saveButton = findViewById(R.id.button);
+
+		//Convertissement des listes
+		try
+		{
+			avionArrayList = new AvionDAO(this).getAll();
+			ArrayList<String> list = new ArrayList<String>();
+			for (Avion avion: avionArrayList)
+			{
+				list.add(avion.getCodeInterne());
+			}
+			spinnerAvion.setAdapter(new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, list));
+
+			 aeroportArrayList = new AeroportDAO(this).getAll();
+			list = new ArrayList<String>();
+			for (Aeroport aeroport: aeroportArrayList)
+			{
+				list.add(aeroport.getOaci());
+			}
+			spinnerAeroportDepart.setAdapter(new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, list));
+			spinnerAeroportArrivee.setAdapter(new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, list));
+
+		} catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+
 
 		if (savedInstanceState != null)
 		{
@@ -168,7 +208,7 @@ public class MouvementFormActivity extends AppCompatActivity
 			public void onNeutralButtonClick(Date date)
 			{
 				// Optional if neutral button does'nt exists
-				textViewHA.setText("");
+				textViewHD.setText("");
 			}
 		});
 
@@ -177,10 +217,11 @@ public class MouvementFormActivity extends AppCompatActivity
 			@Override
 			public void onClick(View view)
 			{
+				Calendar now = Calendar.getInstance();
 
 				// Re-init each time
 				dateTimeFragmentHD.startAtCalendarView();
-				dateTimeFragmentHD.setDefaultDateTime(new GregorianCalendar(2017, Calendar.MARCH, 4, 15, 20).getTime());
+				dateTimeFragmentHD.setDefaultDateTime(new GregorianCalendar(now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH), now.get(Calendar.HOUR_OF_DAY), now.get(Calendar.MINUTE)).getTime());
 				dateTimeFragmentHD.show(getSupportFragmentManager(), TAG_DATETIME_FRAGMENT);
 			}
 		});
@@ -190,10 +231,11 @@ public class MouvementFormActivity extends AppCompatActivity
 			@Override
 			public void onClick(View view)
 			{
+				Calendar now = Calendar.getInstance();
 
 				// Re-init each time
 				dateTimeFragmentHA.startAtCalendarView();
-				dateTimeFragmentHA.setDefaultDateTime(new GregorianCalendar(2017, Calendar.MARCH, 4, 15, 20).getTime());
+				dateTimeFragmentHA.setDefaultDateTime(new GregorianCalendar(now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH), now.get(Calendar.HOUR_OF_DAY), now.get(Calendar.MINUTE)).getTime());
 				dateTimeFragmentHA.show(getSupportFragmentManager(), TAG_DATETIME_FRAGMENT);
 			}
 		});
@@ -241,7 +283,9 @@ public class MouvementFormActivity extends AppCompatActivity
 					editTextDureeVol.requestFocusFromTouch();
 
 					toastMessage = getString(R.string.duree_vol);
+
 				}
+
 
 				//Envoie du Toast
 				if(toastMessage != null)
@@ -255,18 +299,34 @@ public class MouvementFormActivity extends AppCompatActivity
 					String NVol = editTextNVol.getText().toString();
 					int dureeVol = Integer.parseInt(editTextDureeVol.getText().toString());
 					int distance = Integer.parseInt(editTextDistance.getText().toString());
-
 					int nbPassager = Integer.parseInt(editTextNbPassagers.getText().toString());
 					boolean estIntracom = false;
 					Calendar cDepart = Calendar.getInstance();
 					Calendar cArrivee = Calendar.getInstance();
 
+					Avion avion = avionArrayList.get((int) spinnerAvion.getSelectedItemId());
+					Aeroport aeroportDepart = aeroportArrayList.get((int) spinnerAeroportDepart.getSelectedItemId());
+					Aeroport aeroportArrivee = aeroportArrayList.get((int) spinnerAeroportArrivee.getSelectedItemId());
+
 					cDepart.set(dateTimeFragmentHD.getYear(), dateTimeFragmentHD.getMonth(), dateTimeFragmentHD.getDay(), dateTimeFragmentHD.getHourOfDay(), dateTimeFragmentHD.getMinute());
 					cArrivee.set(dateTimeFragmentHA.getYear(), dateTimeFragmentHA.getMonth(), dateTimeFragmentHA.getDay(), dateTimeFragmentHA.getHourOfDay(), dateTimeFragmentHA.getMinute());
 
 					//Enregistrement du mouvement
-					Mouvement mouvement = new Mouvement(0, NVol, distance, cDepart, cArrivee, dureeVol, estIntracom, nbPassager, null, null, null);
+					Mouvement mouvement = new Mouvement(0, NVol, distance, cDepart, cArrivee, dureeVol, estIntracom, nbPassager, avion, aeroportDepart, aeroportArrivee);
 
+					try
+					{
+						new MouvementDAO(getApplicationContext()).add(mouvement);
+
+						setResult(1, null);
+						//finish must be declared here to send the result to parent activity
+						finish();
+
+					} catch (Exception e)
+					{
+						Toast t = Toast.makeText(getApplicationContext(), getString(R.string.erreur_maj_SQLite), Toast.LENGTH_LONG);
+						t.show();
+					}
 
 				}
 
