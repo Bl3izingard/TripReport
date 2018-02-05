@@ -92,7 +92,7 @@ public class HomeActivity extends AppCompatActivity
 						mouvementListView.setAdapter(mouvementAdapter);
 
 
-
+						t.show();
 
 					}
 					catch (Exception e)
@@ -101,11 +101,16 @@ public class HomeActivity extends AppCompatActivity
 					}
 
 				}
+				else if (resultCode == 0)
+				{
+					;
+				}
 				else
 				{
 					t = Toast.makeText(getApplicationContext(), getString(R.string.erreur_ajout_mouvement), Toast.LENGTH_LONG);
+					t.show();
 				}
 		}
-		t.show();
+
 	}
 }
