@@ -26,7 +26,8 @@
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity android:name=".MouvementFormActivity"></activity>
+        <activity android:name=".MouvementFormActivity" />
+        <activity android:name=".RetardFormActivity"></activity>
     </application>
 
 </manifest>

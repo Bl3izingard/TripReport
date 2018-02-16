@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="fr.suid.tripreport2.RetardFormActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/textViewCommentaire"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/commentaire" />
+
+            <EditText
+                android:id="@+id/editTextCommentaire"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textMultiLine" />
+
+            <TextView
+                android:id="@+id/textViewDuree"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/duree" />
+
+            <EditText
+                android:id="@+id/editTextDuree"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="number" />
+
+            <Switch
+                android:id="@+id/switchImplqueAeroport"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/implque_aeroport" />
+
+            <Button
+                android:id="@+id/buttonEnregistrer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/enregistrer" />
+
+        </LinearLayout>
+    </ScrollView>
+</android.support.constraint.ConstraintLayout>

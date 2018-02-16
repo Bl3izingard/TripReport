@@ -22,4 +22,8 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="implque_aeroport">Aéroport Impliqué ?</string>
+    <string name="commentaire">Commentaire</string>
+    <string name="duree">Durée</string>
+    <string name="enregistrer">Enregistrer</string>
 </resources>

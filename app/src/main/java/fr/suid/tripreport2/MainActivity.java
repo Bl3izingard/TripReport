@@ -127,6 +127,11 @@ public class MainActivity extends AppCompatActivity
 
 				}
 			}
+			else
+			{
+				Toast t = Toast.makeText(getApplicationContext(), R.string.erreur_internet, Toast.LENGTH_LONG);
+				t.show();
+			}
 		} catch (MalformedURLException e)
 		{
 			Log.e("MainActivity", e.toString());
@@ -193,12 +198,7 @@ public class MainActivity extends AppCompatActivity
 				{
 					Log.e("MainActivityAsyncTask", e.toString());
 				}
-			} else
-			{
-				Toast t = Toast.makeText(getApplicationContext(), R.string.erreur_internet, Toast.LENGTH_LONG);
-				t.show();
 			}
-
 
 			return null;
 
