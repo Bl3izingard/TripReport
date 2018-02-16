@@ -6,7 +6,7 @@
     android:padding="15dp">
 
     <TextView
-        android:id="@+id/mListTextViewIdRetard"
+        android:id="@+id/mTextViewListeIdRetard"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -14,7 +14,7 @@
         android:text="TextView" />
 
     <TextView
-        android:id="@+id/mListTextViewDuree"
+        android:id="@+id/mTextViewListeDuree"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
@@ -22,7 +22,7 @@
         android:text="TextView" />
 
     <TextView
-        android:id="@+id/mListTextViewTypeRetard"
+        android:id="@+id/mTextViewListeTypeRetard"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -30,26 +30,19 @@
         android:text="TextView" />
 
     <TextView
-        android:id="@+id/mListTextViewAvion"
+        android:id="@+id/mTextViewListeCommentaire"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/mListTextViewTypeRetard"
-        android:layout_below="@+id/mListTextViewTypeRetard"
-        android:layout_centerHorizontal="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/mTextViewListeImpliqueAeroport"
         android:text="TextView" />
 
     <TextView
-        android:id="@+id/mListTextViewHeureDepart"
+        android:id="@+id/mTextViewListeImpliqueAeroport"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/mListTextViewIdRetard"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/mTextViewListeIdRetard"
         android:text="TextView" />
 
-    <TextView
-        android:id="@+id/mListTextViewHeureArrivee"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_below="@+id/mListTextViewDuree"
-        android:text="TextView" />
 </RelativeLayout>

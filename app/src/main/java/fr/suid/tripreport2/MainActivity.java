@@ -132,6 +132,7 @@ public class MainActivity extends AppCompatActivity
 				Toast t = Toast.makeText(getApplicationContext(), R.string.erreur_internet, Toast.LENGTH_LONG);
 				t.show();
 			}
+			
 		} catch (MalformedURLException e)
 		{
 			Log.e("MainActivity", e.toString());

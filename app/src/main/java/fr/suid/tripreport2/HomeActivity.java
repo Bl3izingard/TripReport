@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -26,10 +27,13 @@ public class HomeActivity extends AppCompatActivity
 
 	private ListView mouvementListView;
 
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
+
+
 
 		setContentView(R.layout.activity_home);
 		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -52,11 +56,22 @@ public class HomeActivity extends AppCompatActivity
 		//Récupération de la liste des mouvements depuis le SERVEUR PRINCIPAL
 		try
 		{
-			ArrayList<Mouvement> mListe = new MouvementDAO(this.getApplicationContext()).getAll();
+			final ArrayList<Mouvement> mListe = new MouvementDAO(this.getApplicationContext()).getAll();
 			MouvementAdapter mouvementAdapter = new MouvementAdapter(this, R.layout.activity_mouvement_list, mListe);
 			mouvementListView.setAdapter(mouvementAdapter);
 
+			mouvementListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+				@Override
+				public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+					Intent i = new Intent(HomeActivity.this, RetardActivity.class);
 
+					i.putExtra("idMouvement", mListe.get(position).getId());
+
+					startActivityForResult(i, 1);
+
+					return true;
+					}
+			});
 
 
 		}
@@ -64,7 +79,7 @@ public class HomeActivity extends AppCompatActivity
 		{
 			Log.e("HERROR", e.toString());
 		}
-;
+
 	}
 
 

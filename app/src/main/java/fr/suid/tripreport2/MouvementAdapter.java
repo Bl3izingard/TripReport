@@ -1,6 +1,7 @@
 package fr.suid.tripreport2;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,12 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import java.text.DateFormat;
-import java.text.FieldPosition;
-import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import aeroplan.Mouvement;
@@ -46,9 +42,9 @@ public class MouvementAdapter extends ArrayAdapter<Mouvement>
 		if(viewHolder == null)
 		{
 			viewHolder = new MouvementViewHolder();
-			viewHolder.mListTextViewNumeroVol = (TextView) convertView.findViewById(R.id.mListTextViewNumeroVol);
-			viewHolder.mListTextViewAeroportDepart = (TextView) convertView.findViewById(R.id.mListTextViewAeroportDepart);
-			viewHolder.mListTextViewAeroportArrivee = (TextView) convertView.findViewById(R.id.mListTextViewAeroportArrivee);
+			viewHolder.mListTextViewNumeroVol = (TextView) convertView.findViewById(R.id.mListTextViewTypeRetard);
+			viewHolder.mListTextViewAeroportDepart = (TextView) convertView.findViewById(R.id.mListTextViewIdRetard);
+			viewHolder.mListTextViewAeroportArrivee = (TextView) convertView.findViewById(R.id.mListTextViewDuree);
 			viewHolder.mListTextViewAvion = (TextView) convertView.findViewById(R.id.mListTextViewAvion);
 			viewHolder.mListTextViewHeureDepart = (TextView) convertView.findViewById(R.id.mListTextViewHeureDepart);
 			viewHolder.mListTextViewHeureArrivee = (TextView) convertView.findViewById(R.id.mListTextViewHeureArrivee);
@@ -70,7 +66,6 @@ public class MouvementAdapter extends ArrayAdapter<Mouvement>
 			viewHolder.mListTextViewHeureDepart.setText(dateFormat.format(mouvement.getDateHeureDepart().getTime()));
 			viewHolder.mListTextViewHeureArrivee.setText(dateFormat.format(mouvement.getDateHeureArrivee().getTime()));
 		}
-
 
 		return convertView;
 	}

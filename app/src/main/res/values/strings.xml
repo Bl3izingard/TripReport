@@ -26,4 +26,8 @@
     <string name="commentaire">Commentaire</string>
     <string name="duree">Durée</string>
     <string name="enregistrer">Enregistrer</string>
+    <string name="aeroport_implique">Aeroport Impliqué</string>
+    <string name="aeroport_non_implique">Aeroport non Impliqué</string>
+    <string name="title_activity_retard">Retards</string>
+    <string name="type_retard">Type Retard</string>
 </resources>

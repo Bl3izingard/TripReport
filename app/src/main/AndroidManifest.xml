@@ -27,7 +27,11 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity android:name=".MouvementFormActivity" />
-        <activity android:name=".RetardFormActivity"></activity>
+        <activity android:name=".RetardFormActivity" />
+        <activity
+            android:name=".RetardActivity"
+            android:label="@string/title_activity_retard"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

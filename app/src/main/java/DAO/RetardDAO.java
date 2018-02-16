@@ -30,6 +30,20 @@ public class RetardDAO extends DAOSqlLite<Retard>
 		return false;
 	}
 
+	public boolean add(Retard o, int idMouvement) throws Exception
+	{
+		SQLiteDatabase db = getWritableDatabase();
+
+		db.execSQL(String.format("INSERT INTO Retard (commentaire, duree, impliqueAeroport, Mouvement_id, TypeRetard_id) VALUES ('%s', '%s', '%s', '%s', '%s')",
+				o.getCommentaire(),
+				o.getDuree(),
+				(o.getImpliqueAeroport()) ? 1 : 0,
+				idMouvement,
+				o.getType().getId()));
+
+		return true;
+	}
+
 	@Override
 	public boolean update(Retard o) throws Exception
 	{

@@ -22,7 +22,7 @@
                 android:text="@string/commentaire" />
 
             <EditText
-                android:id="@+id/editTextCommentaire"
+                android:id="@+id/editTextFormCommentaire"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
@@ -35,20 +35,31 @@
                 android:text="@string/duree" />
 
             <EditText
-                android:id="@+id/editTextDuree"
+                android:id="@+id/editTextFormDuree"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="number" />
 
+            <TextView
+                android:id="@+id/textViewTypeRetard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/type_retard" />
+
+            <Spinner
+                android:id="@+id/spinnerFormTypeRetard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
             <Switch
-                android:id="@+id/switchImplqueAeroport"
+                android:id="@+id/switchFormImplqueAeroport"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/implque_aeroport" />
 
             <Button
-                android:id="@+id/buttonEnregistrer"
+                android:id="@+id/buttonRetardSave"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/enregistrer" />

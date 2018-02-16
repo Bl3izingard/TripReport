@@ -112,7 +112,9 @@ public class MouvementDAO extends DAOSqlLite<Mouvement>
 							aeroportArrivee
 					);
 
-					//mouvement = feedRetard(mouvement, rListe);
+					if(!rListe.isEmpty())
+						mouvement = feedRetard(mouvement, rListe);
+
 
 					mListe.add(mouvement);
 				} while(cursor.moveToNext());
@@ -145,7 +147,7 @@ public class MouvementDAO extends DAOSqlLite<Mouvement>
 			{
 				do
 				{
-					ArrayList<Retard> rListe = new RetardDAO(super.context.getApplicationContext()).getAll();
+					ArrayList<Retard> rListe = new RetardDAO(super.context.getApplicationContext()).getAll("Mouvement_id", cursor.getString(cursor.getColumnIndex("id")));
 					Avion avion = new AvionDAO(super.context.getApplicationContext()).get(cursor.getColumnIndex("Avion_id"));
 					Aeroport aeroportDepart = new AeroportDAO(super.context.getApplicationContext()).get(cursor.getInt(cursor.getColumnIndex("AeroportDepart_oaci")));
 					Aeroport aeroportArrivee = new AeroportDAO(super.context.getApplicationContext()).get(cursor.getInt(cursor.getColumnIndex("AeroportArrivee_oaci")));
@@ -165,7 +167,8 @@ public class MouvementDAO extends DAOSqlLite<Mouvement>
 							aeroportArrivee
 					);
 
-					mouvement = feedRetard(mouvement, rListe);
+					if(!rListe.isEmpty())
+						mouvement = feedRetard(mouvement, rListe);
 
 					mListe.add(mouvement);
 				} while(cursor.moveToNext());
@@ -196,7 +199,7 @@ public class MouvementDAO extends DAOSqlLite<Mouvement>
 		{
 			if (cursor.moveToFirst())
 			{
-				ArrayList<Retard> rListe = new RetardDAO(super.context.getApplicationContext()).getAll();
+				ArrayList<Retard> rListe = new RetardDAO(super.context.getApplicationContext()).getAll("Mouvement_id", cursor.getString(cursor.getColumnIndex("id")));
 				Avion avion = new AvionDAO(super.context.getApplicationContext()).get(cursor.getColumnIndex("Avion_id"));
 				Aeroport aeroportDepart = new AeroportDAO(super.context.getApplicationContext()).get(cursor.getInt(cursor.getColumnIndex("AeroportDepart_oaci")));
 				Aeroport aeroportArrivee = new AeroportDAO(super.context.getApplicationContext()).get(cursor.getInt(cursor.getColumnIndex("AeroportArrivee_oaci")));
@@ -209,13 +212,14 @@ public class MouvementDAO extends DAOSqlLite<Mouvement>
 						cursor.getString(cursor.getColumnIndex("numeroVol")),
 						dateHeureDepart,
 						dateHeureArrivee,
-						cursor.getInt(cursor.getInt(cursor.getColumnIndex("dureeVol"))),
+						cursor.getInt(cursor.getColumnIndex("dureeVol")),
 						avion,
 						aeroportDepart,
 						aeroportArrivee
 				);
 
-				feedRetard(mouvement, rListe);
+				if(!rListe.isEmpty())
+					mouvement = feedRetard(mouvement, rListe);
 			}
 		} catch (SQLException e)
 		{
