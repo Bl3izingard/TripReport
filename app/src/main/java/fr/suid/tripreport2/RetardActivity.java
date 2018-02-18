@@ -1,5 +1,7 @@
 package fr.suid.tripreport2;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +9,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -22,7 +25,8 @@ public class RetardActivity extends AppCompatActivity
 
 	private ListView retardListView;
 	private int idMouvement;
-
+	private ArrayList<Retard> rListe;
+	private RetardAdapter retardAdapter;
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -52,9 +56,47 @@ public class RetardActivity extends AppCompatActivity
 		//Récupération de la liste des mouvements depuis le SERVEUR PRINCIPAL
 		try
 		{
-			ArrayList<Retard> rListe = new MouvementDAO(this.getApplicationContext()).get(this.idMouvement).getLesRetards();
-			RetardAdapter retardAdapter = new RetardAdapter(this, R.layout.activity_retard_list, rListe);
+			rListe = new MouvementDAO(this.getApplicationContext()).get(this.idMouvement).getLesRetards();
+			retardAdapter = new RetardAdapter(this, R.layout.activity_retard_list, rListe);
 			retardListView.setAdapter(retardAdapter);
+
+			retardListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener()
+			{
+				@Override
+				public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id)
+				{
+					AlertDialog.Builder alertDialog = new AlertDialog.Builder(RetardActivity.this);
+					alertDialog.setTitle("Etes vous sûr ?");
+					alertDialog.setMessage("Etes vous sûr de vouloir supprimer ce retard ?");
+					final int pos = position;
+					alertDialog.setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog,int which) {
+
+							try
+							{
+								new RetardDAO(getApplicationContext()).delete(rListe.get(pos));
+								rListe.remove(pos);
+								retardAdapter.notifyDataSetChanged();
+								retardListView.setAdapter(retardAdapter);
+
+							} catch (Exception e)
+							{
+								e.printStackTrace();
+							}
+						}
+					});
+
+					alertDialog.setNeutralButton("Annuler", new DialogInterface.OnClickListener() {
+						public void onClick(DialogInterface dialog, int which) {
+
+						}
+					});
+
+					alertDialog.show();
+
+					return true;
+				}
+			});
 
 		}
 		catch (Exception e)
@@ -82,10 +124,14 @@ public class RetardActivity extends AppCompatActivity
 					//Récupération de la liste des mouvements depuis le SERVEUR PRINCIPAL
 					try
 					{
-						ArrayList<Retard> rListe = new MouvementDAO(this.getApplicationContext()).get(this.idMouvement).getLesRetards();
-						RetardAdapter retardAdapter = new RetardAdapter(this, R.layout.activity_retard_list, rListe);
-						retardListView.setAdapter(retardAdapter);
+						rListe.clear();
 
+						for (Retard r : new MouvementDAO(this.getApplicationContext()).get(this.idMouvement).getLesRetards())
+						{
+							rListe.add(r);
+						}
+
+						retardAdapter.notifyDataSetChanged();
 						t.show();
 
 					}

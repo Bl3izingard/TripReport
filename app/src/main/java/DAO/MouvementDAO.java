@@ -61,7 +61,20 @@ public class MouvementDAO extends DAOSqlLite<Mouvement>
 	@Override
 	public boolean delete(Mouvement o) throws Exception
 	{
-		return false;
+
+		SQLiteDatabase db = getWritableDatabase();
+
+
+
+		if (o.getLesRetards().size() > 0)
+		{
+			db.delete("Retard", String.format("Mouvement_id = %s", String.valueOf(o.getId())), null);
+		}
+
+
+
+
+		return db.delete("Mouvement", String.format("id = %s", String.valueOf(o.getId())), null) > 0;
 	}
 
 

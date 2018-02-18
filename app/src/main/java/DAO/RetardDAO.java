@@ -53,7 +53,11 @@ public class RetardDAO extends DAOSqlLite<Retard>
 	@Override
 	public boolean delete(Retard o) throws Exception
 	{
-		return false;
+		SQLiteDatabase db = getWritableDatabase();
+
+
+		return db.delete("Retard", String.format("id = %s", String.valueOf(o.getId())), null) > 0;
+
 	}
 
 	@Override

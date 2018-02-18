@@ -1,5 +1,6 @@
 package fr.suid.tripreport2;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -40,7 +41,10 @@ public class MainActivity extends AppCompatActivity
 
 	private static int TripReport_TIME_OUT = 2000;
 	private static String URL_VALUE = "http://91.121.67.131:8081/tripreport/getlist.php";
+	private static String URL_VALUE_UPLOAD = "http://91.121.67.131:8081/tripreport/putdatas.php";
 	private static int URL_PORT = 8081;
+	// Progress Dialog
+	private ProgressDialog pDialog;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -76,7 +80,7 @@ public class MainActivity extends AppCompatActivity
 			/* Mise à jour des données SQLite */
 			if(data != null)
 			{
-				/* EFFACEMENT DES DONNEES LOCALES */
+				/* REMPLACEMENT DES DONNEES LOCALES */
 
 				JSONArray jsonArrayArray = (JSONArray) data.get("TypeRetard");
 				JSONObject row = null;
@@ -160,6 +164,15 @@ public class MainActivity extends AppCompatActivity
 
 	private class DownloadDataTask extends AsyncTask<URL, Integer, JSONObject>
 	{
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			pDialog = new ProgressDialog(MainActivity.this);
+			pDialog.setMessage("Chargement des catégories... Veuillez patienter.");
+			pDialog.setIndeterminate(false);
+			pDialog.setCancelable(false);
+			pDialog.show();
+		}
 
 		@Override
 		protected JSONObject doInBackground(URL... urls)
@@ -203,6 +216,93 @@ public class MainActivity extends AppCompatActivity
 
 			return null;
 
+		}
+
+		protected void onPostExecute()
+		{
+			// dismiss the dialog after getting all products
+			pDialog.dismiss();
+
+		}
+
+		public boolean isOnline()
+		{
+			ConnectivityManager cm =
+					(ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+			NetworkInfo netInfo = cm.getActiveNetworkInfo();
+			return netInfo != null && netInfo.isConnectedOrConnecting();
+		}
+	}
+
+	private class UploadDataTask extends AsyncTask<JSONObject, Integer, JSONObject>
+	{
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			pDialog = new ProgressDialog(MainActivity.this);
+			pDialog.setMessage("Sauvegarde des mouvements en cours...");
+			pDialog.setIndeterminate(false);
+			pDialog.setCancelable(true);
+			pDialog.show();
+		}
+
+		protected JSONObject doInBackground(URL url, JSONObject... arg)
+		{
+			if (isOnline())
+			{
+
+
+				HttpClient httpClient = new DefaultHttpClient();
+				HttpPost request = new HttpPost();
+				HttpResponse response = null;
+
+				try
+				{
+					request.setURI(url.toURI());
+					response = httpClient.execute(request);
+					BufferedReader reader = new BufferedReader
+							(new InputStreamReader(response.getEntity().getContent()));
+
+					StringBuilder sb = new StringBuilder();
+					String line = null;
+
+					// Read Server Response
+					while ((line = reader.readLine()) != null)
+					{
+						sb.append(line);
+						break;
+					}
+
+					return new JSONObject(sb.toString());
+				} catch (IOException e)
+				{
+					Log.e("MainActivityAsyncTask", e.toString());
+				} catch (URISyntaxException e)
+				{
+					Log.e("MainActivityAsyncTask", e.toString());
+				} catch (JSONException e)
+				{
+					Log.e("MainActivityAsyncTask", e.toString());
+				}
+			}
+
+			return null;
+
+		}
+
+		@Override
+		protected JSONObject doInBackground(JSONObject... arg)
+		{
+			try
+			{
+				return this.doInBackground(new URL(URL_VALUE_UPLOAD), arg);
+			} catch (MalformedURLException e)
+			{
+				e.printStackTrace();
+			}
+
+			return null;
 		}
 
 		public boolean isOnline()
